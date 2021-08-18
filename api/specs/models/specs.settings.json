@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "specs",
+  "info": {
+    "name": "specs"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "value": {
+      "type": "richtext"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "product": {
+      "via": "specs",
+      "model": "product"
+    }
+  }
+}
