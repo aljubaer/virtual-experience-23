@@ -1,0 +1,33 @@
+name: Virtual Experience CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Deploying to Digitalocean droplet
+        uses: appleboy/ssh-action@master # An action made to control Linux servers
+        with: # We set all our secrets here for the action, these won't be shown in the action logs
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/virtual23/app/virtual-experience-23
+            git pull
+            npm prune
+            npm install
+            npm run build
+            pm2 reload all
